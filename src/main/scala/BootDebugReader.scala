@@ -1,5 +1,5 @@
 import akka.actor.ActorSystem
-import akka.stream.ActorFlowMaterializer
+import akka.stream.ActorMaterializer
 import client.KinesisClientFactory
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 
@@ -9,7 +9,7 @@ object BootDebugReader extends App {
   val kinesisEndpoint = "https://kinesis.eu-west-1.amazonaws.com"
 
   implicit val system = ActorSystem("akka-kinesis-system")
-  implicit val fm = ActorFlowMaterializer()
+  implicit val fm = ActorMaterializer()
   implicit val executionContext = system.dispatcher
 
   val credentialsProvider = new DefaultAWSCredentialsProviderChain()
