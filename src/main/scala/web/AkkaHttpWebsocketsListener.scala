@@ -3,14 +3,14 @@ package web
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
-import akka.stream.FlowMaterializer
+import akka.stream.Materializer
 import akka.stream.scaladsl.{Sink, Source}
 import config.WSServerConfig
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AkkaHttpWebsocketsListener(wsConfig: WSServerConfig, route: Route)
-                                (implicit system: ActorSystem, fm: FlowMaterializer, ex: ExecutionContext)
+                                (implicit system: ActorSystem, fm: Materializer, ex: ExecutionContext)
   extends WebsocketsListener[Http.ServerBinding] {
 
   private lazy val serverSource: Source[Http.IncomingConnection, Future[Http.ServerBinding]] =

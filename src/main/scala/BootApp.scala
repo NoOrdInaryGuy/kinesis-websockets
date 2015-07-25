@@ -1,12 +1,11 @@
 import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server._
+import akka.stream.ActorMaterializer
 import client.KinesisClientFactory
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 import com.typesafe.config.{Config, ConfigFactory}
 import config.{KinesisConfig, WSServerConfig}
-import directives.CustomDirectives._
-import akka.http.scaladsl.server._
-import akka.stream.ActorFlowMaterializer
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 import messageflows.{MessageFlowFactory, PushToKinesisMessageFlowFactory}
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
@@ -31,7 +30,7 @@ object BootApp extends App {
 
   //Implicits
   implicit private val system = ActorSystem(wsConfig.actorSystem)
-  implicit private val fm = ActorFlowMaterializer()
+  implicit private val fm = ActorMaterializer()
   implicit private val executionContext: ExecutionContext = system.dispatcher
 
   //Routing
